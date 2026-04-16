@@ -38,30 +38,45 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusic();
 
 
-    // JARVIS VOICE FIX: Explictly unlock speech engine on FIRST valid user gesture
-    // Chrome/Brave strictly require a click, tap, or keypress to allow audio/speech.
-    const unlockSpeech = () => {
-        if (window.speechSynthesis) {
-            window.isInteractionOccurred = true;
-            // Prime the engine with a silent utterance to unlock audio
-            const silent = new SpeechSynthesisUtterance("");
-            silent.volume = 0;
-            window.speechSynthesis.speak(silent);
+    // JARVIS SYSTEM BOOT: High-frequency interaction catch and retry engine
+    // This is the most aggressive way to trigger voice across Chrome/Brave/Safari.
+    const attemptJarvisGreeting = () => {
+        if (!window.speechSynthesis || hasGreeted) return;
 
-            if (!hasGreeted) {
-                playInitialGreeting();
-            }
+        // Try to prime the engine
+        const silent = new SpeechSynthesisUtterance("");
+        silent.volume = 0;
+        window.speechSynthesis.speak(silent);
+
+        // Attempt full greeting
+        playInitialGreeting();
+
+        if (window.speechSynthesis.speaking) {
+            window.isInteractionOccurred = true;
+            // Unsubscribe all once successful
+            ['click', 'touchstart', 'keydown', 'mousedown', 'mousemove', 'scroll'].forEach(evt => {
+                window.removeEventListener(evt, attemptJarvisGreeting);
+            });
         }
-        // Cleanup all gesture listeners
-        ['click', 'keydown', 'touchstart'].forEach(evt => {
-            window.removeEventListener(evt, unlockSpeech);
-        });
     };
 
-    // Register only VALID user gestures
-    ['click', 'keydown', 'touchstart'].forEach(evt => {
-        window.addEventListener(evt, unlockSpeech, { once: true });
+    // 1. Aggressive Event Listeners (Any movement or click will try to trigger it)
+    ['click', 'touchstart', 'keydown', 'mousedown', 'mousemove', 'scroll'].forEach(evt => {
+        window.addEventListener(evt, attemptJarvisGreeting, { once: true });
     });
+
+    // 2. The Pulse Engine: Keep trying every 500ms until successful
+    // This catches the exact moment the browser 'unlocks' without waiting for another click
+    const bootstrapPulse = setInterval(() => {
+        if (hasGreeted) {
+            clearInterval(bootstrapPulse);
+            return;
+        }
+        attemptJarvisGreeting();
+    }, 500);
+
+    // Initial attempt
+    attemptJarvisGreeting();
 
     window.addEventListener('scroll', updateScrollProgress);
     initChat();
