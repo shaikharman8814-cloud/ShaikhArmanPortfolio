@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="matrix">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaikh Arman | AI Systems Builder & LLM Developer</title>
+    <meta name="description"
+        content="Portfolio of Shaikh Arman, an AI Systems Builder and LLM Application Developer based in Pune, India. Building intelligent AI-powered systems.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <span class="loader-icon">&gt;<span class="blink">_</span></span>
+        </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Background Animation Canvas -->
+    <canvas id="canvas-bg"></canvas>
+    <canvas id="matrix-canvas"></canvas>
+    <!-- Cursor Trail Canvas -->
+    <canvas id="cursor-trail"></canvas>
+    <!-- Scanline & Grain overlays -->
+    <div id="scanlines"></div>
+    <div id="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <a href="#" class="logo">SA<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="otw-pill"><span class="otw-dot"></span> Open to Work</div>
+                <button id="music-toggle" class="tron-btn" title="Play Music">
+                    <div class="disc-inner"></div>
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+                <button id="theme-toggle" class="theme-btn" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2 class="sub-title">Hi, I'm</h2>
+                <h1 class="main-title glitch" data-text="Shaikh Arman">Shaikh <span>Arman</span></h1>
+                <p class="role">I am a <span id="typewriter"></span></p>
+                <p class="description reveal">
+                    I build intelligent AI-powered systems that solve real-world problems using LLMs, APIs, and modern
+                    web technologies.
+                </p>
+                <div class="hero-btns reveal">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="https://github.com/shaikharman8814-cloud" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-github"></i> GitHub Profile
+                    </a>
+                </div>
+                <!-- Hero Skill Tags -->
+                <div class="hero-tags reveal">
+                    <span class="hero-tag">LLM Integration</span>
+                    <span class="hero-tag">Prompt Engineering</span>
+                    <span class="hero-tag">Real-time APIs</span>
+                    <span class="hero-tag">Node.js</span>
+                    <span class="hero-tag">Automation</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glow-sphere"></div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-bar">
+        <div class="container stats-grid">
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="15">0</span><span class="plus">+</span>
+                <p>AI Agents Built</p>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="500">0</span><span class="plus">+</span>
+                <p>Commits Made</p>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="10">0</span><span class="plus">+</span>
+                <p>API Integrations</p>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="100">0</span><span class="plus">%</span>
+                <p>Passion Driven</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Console Section -->
+    <section class="system-console-section">
+        <div class="container">
+            <div class="terminal-window reveal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="terminal-title">bash — arman@ai-core</div>
+                </div>
+                <div class="terminal-body" id="system-terminal">
+                    <div class="terminal-line"><span class="cmd-prefix"># ></span> Initializing AI Core...</div>
+                    <div class="terminal-line"><span class="cmd-prefix"># ></span> Loading LLM weights...</div>
+                    <div class="terminal-line"><span class="cmd-prefix"># ></span> Connecting to SnyderAI, OpenAI & Meta
+                        AI...</div>
+                    <div class="terminal-line"><span class="cmd-prefix"># ></span> System ready. Welcome, Arman.</div>
+                    <div id="terminal-history"></div>
+                    <div class="terminal-input-row">
+                        <span class="cmd-prefix"># ></span>
+                        <input type="text" id="terminal-input" autocomplete="off" placeholder="type 'help'...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+        <div class="container">
+            <h2 class="section-title reveal">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p>
+                        Passionate developer focused on AI systems, automation, and product thinking.
+                        I thrive at the intersection of complex algorithms and user-centric design.
+                    </p>
+                    <p>
+                        With experience building real-world AI assistants and web applications,
+                        I specialize in creating seamless integrations between large language models and functional
+                        software.
+                        Currently based in <strong>Pune, India</strong>, I'm always looking for the next challenge in
+                        the AI space.
+                    </p>
+                </div>
+                <div class="about-stats reveal">
+                    <div class="stat-card">
+                        <h3>Location</h3>
+                        <p>Pune, India</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Specialization</h3>
+                        <p>AI Systems & LLMs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section" id="projects">
+        <div class="container">
+            <h2 class="section-title reveal">Featured Work</h2>
+
+            <!-- Featured Project -->
+            <div class="featured-project reveal">
+                <div class="project-img-container">
+                    <img src="aetheris.png" alt="Aetheris AI Platform" class="project-img">
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="project-details">
+                    <span class="tag">Featured Project</span>
+                    <h3>Aetheris – AI Assistant Platform</h3>
+                    <p>
+                        A multi-functional AI assistant platform integrating advanced LLM APIs for real-time responses
+                        and sophisticated automation workflows.
+                    </p>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Multi-task execution</li>
+                        <li><i class="fas fa-check"></i> Advanced Prompt engineering</li>
+                        <li><i class="fas fa-check"></i> OpenAI, SnyderAI, Meta AI, Gemini & Anthropic integration</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://aetheris-ai-iota.vercel.app" target="_blank" class="btn-live">View Live <i
+                                class="fas fa-external-link-alt" style="pointer-events: none;"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Projects Grid -->
+            <div class="projects-grid">
+                <!-- Project 2: Jarvis-style Assistant -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fas fa-microphone-alt"></i></div>
+                        <h3>Jarvis-style Assistant</h3>
+                        <p>Voice and text assistant that executes commands and answers queries using custom logic and
+                            LLMs.</p>
+                        <div class="card-tags">
+                            <span>Python</span>
+                            <span>Speech AI</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 3: Student Social Network -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fas fa-users"></i></div>
+                        <h3>Student Social Network</h3>
+                        <p>A platform connecting students based on proximity and shared interests with a modern
+                            responsive UI.</p>
+                        <div class="card-tags">
+                            <span>React</span>
+                            <span>Firebase</span>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <a href="https://nearby-students-rose.vercel.app" target="_blank"
+                                class="btn-live btn-sm">View Live
+                                <i class="fas fa-external-link-alt" style="pointer-events: none;"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 4: Online Examination -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Online Examination</h3>
+                        <p>A comprehensive digital exam workflow with real-time response tracking and secure
+                            authentication.</p>
+                        <div class="card-tags">
+                            <span>Java</span>
+                            <span>DBMS</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 5: Telegram AI Bot -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fab fa-telegram"></i></div>
+                        <h3>Telegram AI Bot</h3>
+                        <p>A smart automation bot for Telegram with custom LLM integrations for intelligent task
+                            handling.</p>
+                        <div class="card-tags">
+                            <span>Python</span>
+                            <span>SnyderAI API</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 6: MoneyMulling -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fas fa-coins"></i></div>
+                        <h3>MoneyMulling</h3>
+                        <p>A sophisticated financial application designed to simplify wealth tracking through AI
+                            insights.</p>
+
+                        <!-- Architecture Diagram: A-B-C-D Cycle -->
+                        <div class="mini-arch">
+                            <span class="arch-tag">FRAUD-DETECT-LIVE</span>
+                            <div class="arch-node">
+                                <div class="node-icon">A</div>
+                                <span class="node-label">Source</span>
+                            </div>
+                            <div class="arch-link"></div>
+                            <div class="arch-node">
+                                <div class="node-icon">B</div>
+                                <span class="node-label">Relay</span>
+                            </div>
+                            <div class="arch-link"></div>
+                            <div class="arch-node fraud">
+                                <div class="node-icon">C</div>
+                                <span class="node-label">Target</span>
+                                <span class="fraud-alert-text">!! FRAUD !!</span>
+                            </div>
+                            <div class="arch-link slow"></div>
+                            <div class="arch-node">
+                                <div class="node-icon">D</div>
+                                <span class="node-label">Engine</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini Graph Visualization -->
+                        <div class="mini-graph">
+                            <div class="graph-header">
+                                <span class="graph-title">Yield Analysis</span>
+                                <span class="graph-value">+24.8%</span>
+                            </div>
+                            <div class="graph-grid">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                            <svg class="graph-svg" viewBox="0 0 200 60">
+                                <defs>
+                                    <linearGradient id="graph-gradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--primary-color)" />
+                                        <stop offset="100%" stop-color="transparent" />
+                                    </linearGradient>
+                                </defs>
+                                <path class="graph-area"
+                                    d="M0,60 L0,40 Q20,35 40,45 T80,30 T120,40 T160,20 T200,30 L200,60 Z" />
+                                <path class="graph-line" d="M0,40 Q20,35 40,45 T80,30 T120,40 T160,20 T200,30" />
+                            </svg>
+                        </div>
+
+                        <div class="card-tags">
+                            <span>AI Insights</span>
+                            <span>Finance</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 7: SnyderAI Site -->
+                <div class="project-card reveal">
+                    <div class="card-inner">
+                        <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>SnyderAI Ecosystem</h3>
+                        <p>The central hub for the SnyderAI ecosystem, showcasing a suite of AI-driven projects and
+                            advanced technological integrations.</p>
+                        <div class="card-tags">
+                            <span>Ecosystem</span>
+                            <span>Branding</span>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <a href="https://snyderai-mainsite.vercel.app" target="_blank" class="btn-live btn-sm">View
+                                Live <i class="fas fa-external-link-alt" style="pointer-events: none;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills section" id="skills">
+        <div class="container">
+            <h2 class="section-title reveal">Technical Expertise</h2>
+            <div class="neural-header reveal">
+                <span class="neural-title">Neural Core Competencies</span>
+                <div class="neural-line"></div>
+            </div>
+            <div class="neural-grid">
+                <div class="neural-skill-item reveal" data-percent="95">
+                    <div class="skill-info">
+                        <span>AI SYSTEMS</span>
+                        <span class="skill-load">95% LOAD</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill"></div>
+                    </div>
+                </div>
+                <div class="neural-skill-item reveal" data-percent="92">
+                    <div class="skill-info">
+                        <span>LLM ARCHITECTURES</span>
+                        <span class="skill-load">92% LOAD</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill"></div>
+                    </div>
+                </div>
+                <div class="neural-skill-item reveal" data-percent="88">
+                    <div class="skill-info">
+                        <span>API DESIGN</span>
+                        <span class="skill-load">88% LOAD</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill"></div>
+                    </div>
+                </div>
+                <div class="neural-skill-item reveal" data-percent="94">
+                    <div class="skill-info">
+                        <span>JAVASCRIPT / TS</span>
+                        <span class="skill-load">94% LOAD</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="neural-visualizers reveal">
+                <!-- Radar Chart -->
+                <div class="visualizer-card">
+                    <div class="radar-wrapper">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <polygon points="100,20 170,60 170,140 100,180 30,140 30,60" fill="none"
+                                stroke="rgba(0,255,65,0.2)" stroke-width="1" />
+                            <polygon points="100,50 145,75 145,125 100,150 55,125 55,75" fill="none"
+                                stroke="rgba(0,255,65,0.1)" stroke-width="1" />
+                            <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(0,255,65,0.2)" />
+                            <line x1="100" y1="100" x2="170" y2="60" stroke="rgba(0,255,65,0.2)" />
+                            <line x1="100" y1="100" x2="170" y2="140" stroke="rgba(0,255,65,0.2)" />
+                            <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(0,255,65,0.2)" />
+                            <line x1="100" y1="100" x2="30" y2="140" stroke="rgba(0,255,65,0.2)" />
+                            <line x1="100" y1="100" x2="30" y2="60" stroke="rgba(0,255,65,0.2)" />
+                            <polygon points="100,35 160,70 155,130 100,165 45,115 40,65" fill="rgba(0,255,65,0.3)"
+                                stroke="#00ff41" stroke-width="2">
+                                <animate attributeName="points" dur="3s" repeatCount="indefinite"
+                                    values="100,35 160,70 155,130 100,165 45,115 40,65; 100,40 155,75 150,125 100,160 50,120 45,70; 100,35 160,70 155,130 100,165 45,115 40,65" />
+                            </polygon>
+                        </svg>
+                        <span class="radar-label" style="top: -10px; left: 50%; transform: translateX(-50%);">LLM
+                            Ops</span>
+                        <span class="radar-label" style="top: 25%; right: -20px;">Backend</span>
+                        <span class="radar-label" style="bottom: 25%; right: -20px;">Frontend</span>
+                        <span class="radar-label" style="bottom: -10px; left: 50%; transform: translateX(-50%);">Data
+                            Sci</span>
+                        <span class="radar-label" style="bottom: 25%; left: -20px;">API Dev</span>
+                        <span class="radar-label" style="top: 25%; left: -20px;">DevOps</span>
+                    </div>
+                </div>
+
+                <div class="contribution-section reveal">
+                    <div class="neural-header">
+                        <span class="neural-title">Neural Contribution Graph</span>
+                        <div class="neural-line"></div>
+                    </div>
+                    <div class="contribution-graph" id="contribution-graph"></div>
+                    <div class="contribution-legend">
+                        <span>LESS</span>
+                        <div class="legend-scale">
+                            <div class="dot"></div>
+                            <div class="dot level-1"></div>
+                            <div class="dot level-2"></div>
+                            <div class="dot level-3"></div>
+                            <div class="dot level-4"></div>
+                        </div>
+                        <span>MORE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Journey Section -->
+    <section class="journey section" id="journey">
+        <div class="container">
+            <h2 class="section-title reveal">Technical Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Present</h3>
+                        <p>Specializing in LLM Orchestration and AI Agent development. Building scalable AI systems with
+                            OpenAI, SnyderAI, Meta AI, Gemini, Anthropic, and LangChain.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Education</h3>
+                        <p>Computer Science & Engineering at <strong>Savitribai Phule Pune University</strong>. Focused
+                            on Data Structures, AI Algorithms, and Distributed Systems.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Product & Development</h3>
+                        <p>Focused on merging AI capabilities with functional products, ensuring high-quality user
+                            experiences and performant systems.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Foundations</h3>
+                        <p>Mastered Computer Science fundamentals, Java, Data Structures, and Database Management
+                            Systems to build a strong engineering base.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq section" id="faq">
+        <div class="container">
+            <div class="faq-header reveal">
+                <span class="faq-tag">Technical FAQ</span>
+                <h2 class="faq-title">Deep Intelligence<br>Queries.</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        <span>What defines the 'SnyderAI' reasoning engine?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        SnyderAI represents a proprietary architectural pattern focused on ultra-low latency LLM
+                        orchestration, specifically optimized for real-time task execution and autonomous agent
+                        behavior.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        <span>How does SocialNet handle data privacy for Agentic AI?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        By implementing zero-knowledge proofs and localized differential privacy, SocialNet ensures that
+                        user data is utilized for proximity matching without ever revealing raw identities or
+                        coordinates.
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        <span>Is Aetheris-4 compatible with multi-agent systems?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        Aetheris-4 is natively built for agentic swarms, allowing multiple specialized models to
+                        communicate asynchronously via a unified command-bus for complex problem solving.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <h2 class="section-title reveal">Get In Touch</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info reveal">
+                    <p>I'm currently looking for new opportunities and collaborations in AI development. Feel free to
+                        reach out!</p>
+                    <div class="contact-links">
+                        <a href="mailto:shaikharman8814@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>shaikharman8814@gmail.com</span>
+                        </a>
+                        <a href="https://github.com/shaikharman8814-cloud" target="_blank" class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <span>github.com/shaikharman8814-cloud</span>
+                        </a>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Pune, India</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-action reveal">
+                    <a href="mailto:shaikharman8814@gmail.com" class="btn btn-primary large">Send a Message</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 | Built by <span class="highlight">Shaikh Arman</span></p>
+            <div class="social-footer">
+                <a href="https://github.com/shaikharman8814-cloud" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div id="modal-img-container"></div>
+                <div class="modal-text">
+                    <h2 id="modal-title">Project Title</h2>
+                    <div id="modal-tags" class="card-tags"></div>
+                    <p id="modal-description">Detailed description goes here...</p>
+                    <div id="modal-arch"></div>
+                    <div class="modal-links" id="modal-links-container">
+                        <a id="modal-link-demo" href="#" target="_blank" class="btn-live">
+                            View Live <i class="fas fa-external-link-alt" style="pointer-events: none;"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Audio -->
+    <audio id="bg-audio" loop preload="auto"
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-btn" id="chat-toggle">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <h3>AI Assistant</h3>
+                <button id="chat-close"
+                    style="background:none; border:none; color:#fff; cursor:pointer;">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="msg bot">Hello! I'm Arman's AI assistant. Ask me anything about his work or skills!</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask me something...">
+                <button class="chat-send" id="chat-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js?v=1.3"></script>
+</body>
+
+</html>
