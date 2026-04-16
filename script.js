@@ -77,18 +77,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateThemeIcon(initialTheme);
 
-    // Hide preloader (stay for 0.6s)
+    // Start Jarvis Text Greeting immediately
+    playInitialGreeting();
+
+    // Hide preloader (stay for 0.4s)
     setTimeout(() => {
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.remove();
-                // Start Jarvis Greeting automatically after preloader
-                playInitialGreeting();
-            }, 600);
+            }, 400);
         }
-    }, 600);
+    }, 400);
 });
 
 function updateScrollProgress() {
@@ -224,22 +225,26 @@ function speakResponse(text) {
 }
 
 function playInitialGreeting() {
-    if (hasGreeted) return;
     const greeting = "System Online, Shaikh Arman's Core initialized";
-    speakResponse(greeting);
 
-    // Only mark as greeted if the browser actually allows speech
-    if (window.speechSynthesis.speaking || window.isInteractionOccurred) {
-        hasGreeted = true;
-    }
-
+    // 1. Always show text greeting immediately
     const history = document.getElementById('terminal-history');
-    if (history) {
+    if (history && !window.hasTextGreeted) {
         const line = document.createElement('div');
         line.className = 'terminal-line';
         line.style.color = 'var(--primary-color)';
         line.innerHTML = `<span class="cmd-prefix"># ></span> [AUTO-BOOT] ${greeting}`;
         history.appendChild(line);
+        window.hasTextGreeted = true;
+    }
+
+    // 2. Try to speak (will only work if browser allows gesture/autoplay)
+    if (hasGreeted) return;
+    speakResponse(greeting);
+
+    // Only mark as successfully spoken if the engine is actually working
+    if (window.speechSynthesis.speaking) {
+        hasGreeted = true;
     }
 }
 
