@@ -38,21 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusic();
 
 
-    // Global Fallback for Jarvis Greeting (For strict browsers like Safari/Chrome)
-    const triggerGreeting = () => {
-        if (!hasGreeted) {
+    // JARVIS VOICE FIX: Explicitly unlock speech engine on first interaction
+    const unlockSpeech = () => {
+        if (window.speechSynthesis) {
+            const silent = new SpeechSynthesisUtterance("");
+            silent.volume = 0;
+            window.speechSynthesis.speak(silent);
             window.isInteractionOccurred = true;
-            playInitialGreeting();
+            if (!hasGreeted) playInitialGreeting();
         }
-        window.removeEventListener('click', triggerGreeting);
-        window.removeEventListener('keydown', triggerGreeting);
-        window.removeEventListener('touchstart', triggerGreeting);
-        window.removeEventListener('mousemove', triggerGreeting);
+        window.removeEventListener('click', unlockSpeech);
+        window.removeEventListener('keydown', unlockSpeech);
+        window.removeEventListener('touchstart', unlockSpeech);
     };
-    window.addEventListener('click', triggerGreeting);
-    window.addEventListener('keydown', triggerGreeting);
-    window.addEventListener('touchstart', triggerGreeting);
-    window.addEventListener('mousemove', triggerGreeting);
+    window.addEventListener('click', unlockSpeech);
+    window.addEventListener('keydown', unlockSpeech);
+    window.addEventListener('touchstart', unlockSpeech);
 
     window.addEventListener('scroll', updateScrollProgress);
     initChat();
@@ -183,21 +184,32 @@ function speakResponse(text) {
     if (!window.speechSynthesis) return;
 
     const utter = () => {
+        // Only proceed if interaction occurred (Chrome requirement)
+        if (!window.isInteractionOccurred && !window.hasFiredInitial) return;
+
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         const voices = window.speechSynthesis.getVoices();
-        // Fallback for voice selection
-        const preferredVoice = voices.find(v => (v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('UK English')) && v.lang.includes('en'));
-        if (preferredVoice) utterance.voice = preferredVoice;
 
+        // Find a high-quality voice
+        const preferredVoice = voices.find(v =>
+            (v.name.includes('Google') || v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('English')) &&
+            (v.lang.startsWith('en'))
+        );
+
+        if (preferredVoice) utterance.voice = preferredVoice;
         utterance.pitch = 0.9;
         utterance.rate = 1.0;
         utterance.volume = 1.0;
+
         window.speechSynthesis.speak(utterance);
     };
 
     if (window.speechSynthesis.getVoices().length === 0) {
-        window.speechSynthesis.onvoiceschanged = utter;
+        window.speechSynthesis.onvoiceschanged = () => {
+            utter();
+            window.speechSynthesis.onvoiceschanged = null; // Prevent multi-triggers
+        };
     } else {
         utter();
     }
