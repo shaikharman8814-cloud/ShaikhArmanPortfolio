@@ -38,28 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusic();
 
 
-    // JARVIS VOICE FIX: Explictly unlock speech engine on ANY initial activity
+    // JARVIS VOICE FIX: Explictly unlock speech engine on FIRST valid user gesture
+    // Chrome/Brave strictly require a click, tap, or keypress to allow audio/speech.
     const unlockSpeech = () => {
         if (window.speechSynthesis) {
+            window.isInteractionOccurred = true;
+            // Prime the engine with a silent utterance to unlock audio
             const silent = new SpeechSynthesisUtterance("");
             silent.volume = 0;
             window.speechSynthesis.speak(silent);
-            window.isInteractionOccurred = true;
-            if (!hasGreeted) playInitialGreeting();
+
+            if (!hasGreeted) {
+                playInitialGreeting();
+            }
         }
-        // Remove all listeners once unlocked
-        ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll'].forEach(evt => {
+        // Cleanup all gesture listeners
+        ['click', 'keydown', 'touchstart'].forEach(evt => {
             window.removeEventListener(evt, unlockSpeech);
         });
     };
 
-    // Add multiple event triggers to catch the user as soon as possible
-    ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll'].forEach(evt => {
+    // Register only VALID user gestures
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
         window.addEventListener(evt, unlockSpeech, { once: true });
     });
-
-    // Also attempt an immediate play (might work on some browsers/settings)
-    setTimeout(() => { if (!hasGreeted) playInitialGreeting(); }, 500);
 
     window.addEventListener('scroll', updateScrollProgress);
     initChat();
