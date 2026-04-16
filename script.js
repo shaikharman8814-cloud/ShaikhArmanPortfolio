@@ -208,8 +208,10 @@ function speakResponse(text) {
     if (!window.speechSynthesis) return;
 
     const utter = () => {
-        // Only proceed if interaction occurred (Chrome requirement)
-        if (!window.isInteractionOccurred && !window.hasFiredInitial) return;
+        // Global unlock for resume (Chrome specific fix)
+        if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
 
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
@@ -253,14 +255,17 @@ function playInitialGreeting() {
         window.hasTextGreeted = true;
     }
 
-    // 2. Try to speak (will only work if browser allows gesture/autoplay)
+    // 2. Try to speak 
     if (hasGreeted) return;
+
+    // Set active flag for terminal responses
+    window.isJarvisActive = true;
+
     speakResponse(greeting);
 
-    // Only mark as successfully spoken if the engine is actually working
-    if (window.speechSynthesis.speaking) {
-        hasGreeted = true;
-    }
+    // Consider it greeted if we successfully pushed to queue
+    // Browsers will play it as soon as they unlock
+    hasGreeted = true;
 }
 
 function initProjectExpansion() {
