@@ -449,17 +449,52 @@ function initChat() {
     };
     const getBotResponse = (input) => {
         const ui = input.toLowerCase();
-        if (ui.includes('hello') || ui.includes('hi')) return "Hi there! How can I help you today?";
-        if (ui.includes('project') || ui.includes('work')) return "Arman has built several premium projects like the SnyderAI Ecosystem, Aetheris AI, and a Jarvis-style assistant.";
-        if (ui.includes('snyder')) return "SnyderAI is Arman's core ecosystem, hub for projects like Aetheris and SocialNet. You can view it live at snyderai-mainsite.vercel.app";
-        return "That's interesting! I'm just a simple assistant, but Arman can tell you more.";
+
+        if (ui.includes('hello') || ui.includes('hi')) {
+            return "Greetings! I am Arman's AI Core. How can I assist you with his portfolio today?";
+        }
+
+        if (ui.includes('skill') || ui.includes('tech') || ui.includes('stack')) {
+            return "Arman specializes in AI Systems and LLM Orchestration. His core stack includes OpenAI, SnyderAI, Meta AI, Gemini, LangChain, Node.js, and Python. He's also highly proficient in React and API Architecture.";
+        }
+
+        if (ui.includes('project') || ui.includes('work')) {
+            return "He has built premium projects like the SnyderAI Ecosystem, Aetheris AI Platform, and 'Money Mulling' (a financial app with AI fraud detection). Which one would you like to know more about?";
+        }
+
+        if (ui.includes('money') || ui.includes('mulling') || ui.includes('finance')) {
+            return "Money Mulling is a sophisticated financial app featuring real-time AI insights and a transaction cycle with automated fraud detection (A-B-C-D Cycle). It's built for secure wealth tracking.";
+        }
+
+        if (ui.includes('contact') || ui.includes('email') || ui.includes('reach')) {
+            return "You can reach Arman at shaikharman8814@gmail.com or explore his code on GitHub at github.com/shaikharman8814-cloud. He's currently based in Pune, India.";
+        }
+
+        if (ui.includes('about') || ui.includes('who') || ui.includes('bio')) {
+            return "Shaikh Arman is an AI Systems Builder and LLM Developer. He focuses on merging complex AI capabilities with user-centric design to solve real-world problems.";
+        }
+
+        if (ui.includes('snyder')) {
+            return "SnyderAI is Arman's flagship ecosystem, acting as a hub for advanced AI projects like Aetheris and SocialNet. It focuses on ultra-low latency LLM orchestration.";
+        }
+
+        if (ui.includes('education') || ui.includes('college') || ui.includes('university')) {
+            return "Arman is studying Computer Science & Engineering at Savitribai Phule Pune University, focusing on Data Structures and AI Algorithms.";
+        }
+
+        return "I'm analyzing your request... Arman is an expert in AI systems, LLMs, and high-end web development. You can ask me about his skills, projects, or how to contact him!";
     };
+
     const handleSend = () => {
         const text = input.value.trim();
         if (!text) return;
         addMessage(text, 'user');
         input.value = '';
-        setTimeout(() => { addMessage(getBotResponse(text), 'bot'); }, 600);
+        setTimeout(() => {
+            const response = getBotResponse(text);
+            addMessage(response, 'bot');
+            if (window.isInteractionOccurred) speakResponse(response); // Also speak the chat response!
+        }, 600);
     };
     send.addEventListener('click', handleSend);
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSend(); });
