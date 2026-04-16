@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusic();
 
 
-    // JARVIS VOICE FIX: Explicitly unlock speech engine on first interaction
+    // JARVIS VOICE FIX: Explictly unlock speech engine on ANY initial activity
     const unlockSpeech = () => {
         if (window.speechSynthesis) {
             const silent = new SpeechSynthesisUtterance("");
@@ -47,13 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
             window.isInteractionOccurred = true;
             if (!hasGreeted) playInitialGreeting();
         }
-        window.removeEventListener('click', unlockSpeech);
-        window.removeEventListener('keydown', unlockSpeech);
-        window.removeEventListener('touchstart', unlockSpeech);
+        // Remove all listeners once unlocked
+        ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll'].forEach(evt => {
+            window.removeEventListener(evt, unlockSpeech);
+        });
     };
-    window.addEventListener('click', unlockSpeech);
-    window.addEventListener('keydown', unlockSpeech);
-    window.addEventListener('touchstart', unlockSpeech);
+
+    // Add multiple event triggers to catch the user as soon as possible
+    ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll'].forEach(evt => {
+        window.addEventListener(evt, unlockSpeech, { once: true });
+    });
+
+    // Also attempt an immediate play (might work on some browsers/settings)
+    setTimeout(() => { if (!hasGreeted) playInitialGreeting(); }, 500);
 
     window.addEventListener('scroll', updateScrollProgress);
     initChat();
