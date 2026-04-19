@@ -1907,3 +1907,8 @@ footer {
         opacity: 0;
     }
 }
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 15px rgba(0, 255, 157, 0.4); }
+    50% { box-shadow: 0 0 35px rgba(0, 255, 157, 0.8); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 157, 0.4); }
+}
