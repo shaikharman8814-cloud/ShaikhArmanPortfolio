@@ -290,8 +290,27 @@ function initProjectExpansion() {
             const graph = card.querySelector('.mini-graph')?.outerHTML || '';
             const modalArch = document.getElementById('modal-arch');
             if (modalArch) modalArch.innerHTML = arch + graph;
+            
             const linksContainer = document.getElementById('modal-links-container');
-            if (linksContainer) {
+            const modalBody = modal.querySelector('.modal-body');
+            
+            // List of projects where we want to hide the 'View Live' button inside the modal
+            // and use a centered single-column layout to fill the space.
+            const projectsToHideButton = [
+                'Aetheris',
+                'SnyderAI',
+                'Social Network',
+                'City Car Drive',
+                'Voxel Craft'
+            ];
+            
+            const shouldHideButton = projectsToHideButton.some(p => title.includes(p));
+            
+            if (shouldHideButton) {
+                if (linksContainer) linksContainer.classList.remove('active');
+                if (modalBody) modalBody.classList.add('single-column');
+            } else if (linksContainer) {
+                if (modalBody) modalBody.classList.remove('single-column');
                 if (title.includes('Social Network') || title.includes('SnyderAI') || title.includes('Aetheris') || (demoLink && demoLink !== '#' && !demoLink.includes('localhost'))) {
                     linksContainer.classList.add('active');
                     const linkBtn = document.getElementById('modal-link-demo');
